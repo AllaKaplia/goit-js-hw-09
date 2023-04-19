@@ -61,17 +61,17 @@ const countdownTimer = {
 
 
 
-function flatpickr(options) {
-  let picker = flatpickr(document.getElementById("datetime-picker"), options);
+// function flatpickr(options) {
+//   let picker = flatpickr(document.getElementById("datetime-picker"), options);
 
-  startBtn.addEventListener('click', function() {
-    if (picker.selectedDates[0] > new Date()){
-      startCountdown(picker.selectedDates[0]);
-    } else {
-      window.alert('Please choose a date in the future.')
-    }
-  });  
-}
+//   startBtn.addEventListener('click', function() {
+//     if (picker.selectedDates[0] > new Date()){
+//       startCountdown(picker.selectedDates[0]);
+//     } else {
+//       window.alert('Please choose a date in the future.')
+//     }
+//   });  
+// }
 
 
 function pad(value) {
