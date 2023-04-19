@@ -30,11 +30,11 @@ const options = {
 flatpickr(inputTime, options);
 
 const countdownTimer = {
-  isActive: false,
+  // isActive: false,
   start () {
-    if(isActive){
-      return;
-    }
+    // if(isActive){
+    //   return;
+    // }
     
     const startTime = options.defaultDate;
     console.log(startTime);
