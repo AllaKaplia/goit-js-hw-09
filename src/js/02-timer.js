@@ -10,67 +10,58 @@ const secondsEl = document.querySelector('[data-seconds]');
 
 const TIME_INTERVAL = 1000;
 
-inputTime.addEventListener('input', () => {});
-startBtn.addEventListener('click', () => {
-  countdownTimer.start();
-})
 
-
-
-const options = {
-  enableTime: true,
-  time_24hr: true,
-  defaultDate: new Date(),
-  minuteIncrement: 1,
+flatpickr("#datetime-picker", {
+  isActive: false, 
+  intervalId: null, 
+  enableTime: true, 
+  time_24hr: true, 
+  defaultDate: new Date(), 
+  minuteIncrement: 1, 
   onClose(selectedDates) {
-    console.log(selectedDates[0]);
-  },
-};
+    inputTime.addEventListener('click', function() {
+      if (selectedDates[0] > this.defaultDate){
+        countdownTimer(selectedDates[0]);
+      } else {
+        window.alert('Please choose a date in the future.');
+      }
+    })
+  }
+},);
 
-flatpickr(inputTime, options);
+function countdownTimer(value) {
+  setInterval(() => {
+    const currentTime = new Date();
+    const startDate = value;
+    const ms = startDate - currentTime;
 
-const countdownTimer = {
-  // isActive: false,
-  start () {
-    // if(isActive){
-    //   return;
-    // }
-    
-    const startTime = options.defaultDate;
-    console.log(startTime);
-    setInterval(() => {
-      const currentTime = new Date();
-      const currentDay = currentTime.getDate();
-      const currentHour = currentTime.getHours();
-      const currentMinutes = currentTime.getMinutes();
-      const currentSeconds = currentTime.getSeconds();
+    const { days, hours, minutes, seconds } = convertMs(ms);
+    console.log(`${days} : ${hours} : ${minutes} : ${seconds}`);
+
+  }, TIME_INTERVAL);
+}
+//  {
+//   // isActive: false,
+//   start () {
+
+//     setInterval(() => {
+//       
+//       const currentDay = currentTime.getDate();
+//       const currentHour = currentTime.getHours();
+//       const currentMinutes = currentTime.getMinutes();
+//       const currentSeconds = currentTime.getSeconds();
       
 
-      const ms = startTime - currentTime;
-      const { days, hours, minutes, seconds } = convertMs(ms);
-      console.log(`${days} : ${hours} : ${minutes} : ${seconds}`);
+//       const ms = startTime - currentTime;
+//       const { days, hours, minutes, seconds } = convertMs(ms);
+//       console.log(`${days} : ${hours} : ${minutes} : ${seconds}`);
 
-      dayEl.textContent = currentDay;
-      hoursEl.textContent = currentHour;
-      minutesEl.textContent = currentMinutes;
-      secondsEl.textContent = currentSeconds;
-    }, TIME_INTERVAL);
-  }
-}
-
-
-
-
-// function flatpickr(options) {
-//   let picker = flatpickr(document.getElementById("datetime-picker"), options);
-
-//   startBtn.addEventListener('click', function() {
-//     if (picker.selectedDates[0] > new Date()){
-//       startCountdown(picker.selectedDates[0]);
-//     } else {
-//       window.alert('Please choose a date in the future.')
-//     }
-//   });  
+//       dayEl.textContent = currentDay;
+//       hoursEl.textContent = currentHour;
+//       minutesEl.textContent = currentMinutes;
+//       secondsEl.textContent = currentSeconds;
+//     }, TIME_INTERVAL);
+//   }
 // }
 
 
