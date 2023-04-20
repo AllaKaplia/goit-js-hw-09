@@ -13,7 +13,6 @@ let intervalId = null;
 
 flatpickr("#datetime-picker", {
   isActive: false, 
-  intervalId: null, 
   enableTime: true, 
   time_24hr: true, 
   defaultDate: new Date(), 
