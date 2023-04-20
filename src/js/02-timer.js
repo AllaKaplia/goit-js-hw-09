@@ -9,7 +9,7 @@ const minutesEl = document.querySelector('[data-minutes]');
 const secondsEl = document.querySelector('[data-seconds]');
 
 const TIME_INTERVAL = 1000;
-
+let intervalId = null;
 
 flatpickr("#datetime-picker", {
   isActive: false, 
@@ -30,7 +30,8 @@ flatpickr("#datetime-picker", {
 },);
 
 function countdownTimer(value) {
-  setInterval(() => {
+  clearInterval(intervalId);
+  intervalId = setInterval(() => {
     const currentTime = new Date();
     const startDate = value;
     const ms = startDate - currentTime;
@@ -38,32 +39,26 @@ function countdownTimer(value) {
     const { days, hours, minutes, seconds } = convertMs(ms);
     console.log(`${days} : ${hours} : ${minutes} : ${seconds}`);
 
+    dayEl.textContent = days;
+    hoursEl.textContent = hours;
+    minutesEl.textContent = minutes;
+    secondsEl.textContent = seconds;
+
+    if (ms <= 0) {
+      clearInterval(intervalId);
+      window.alert('Time out!!!');
+    }
   }, TIME_INTERVAL);
 }
-//  {
-//   // isActive: false,
-//   start () {
 
-//     setInterval(() => {
-//       
-//       const currentDay = currentTime.getDate();
-//       const currentHour = currentTime.getHours();
-//       const currentMinutes = currentTime.getMinutes();
-//       const currentSeconds = currentTime.getSeconds();
-      
-
-//       const ms = startTime - currentTime;
-//       const { days, hours, minutes, seconds } = convertMs(ms);
-//       console.log(`${days} : ${hours} : ${minutes} : ${seconds}`);
-
-//       dayEl.textContent = currentDay;
-//       hoursEl.textContent = currentHour;
-//       minutesEl.textContent = currentMinutes;
-//       secondsEl.textContent = currentSeconds;
-//     }, TIME_INTERVAL);
-//   }
-// }
-
+startBtn.addEventListener('click', () => {
+  const selectedDate = inputTime.selectedDates[0];
+  if (selectedDate > new Date()) {
+    countdownTimer(selectedDate);
+  } else {
+    window.alert('Please choose a date in the future.');
+  }
+});
 
 function pad(value) {
   return String(value).padStart(2, '0');
