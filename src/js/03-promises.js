@@ -4,9 +4,8 @@ const refs = {
   formEl: document.querySelector('.form'),
 }
 
-
-refs.formEl.addEventListener('submit', onPromisesStart);
 refs.formEl.addEventListener('input', onFormInputValue);
+refs.formEl.addEventListener('submit', onPromisesStart);
 
 let delayTime = 0;
 let amountQuantity = 0;
