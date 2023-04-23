@@ -34,18 +34,13 @@ function onPromisesStart(evt) {
 
 function makePromises(delayValue, amountValue, stepValue) {
   let delay = delayValue;
+  let i = 1;
   while (i <= amountValue) {
-    createPromise(i, delay)
-      .then(value => {
-        Notify.info(
-          `✅ Fulfilled promise ${value.position} in ${value.delay}ms`
-        );
-      })
-      .catch(value => {
-        Notify.failure(
-          `❌ Rejected promise ${value.position} in ${value.delay}ms`
-        );
-      });
+    createPromise(i, delay).then((value) => {
+      Notiflix.Notify.success(`✅ Fulfilled promise ${value.position} in ${value.delay}ms`);
+    }).catch((value) => {
+      Notiflix.Notify.failure(`❌ Rejected promise ${value.position} in ${value.delay}ms`);
+    });
     delay += stepValue;
     i += 1;
   }
@@ -55,11 +50,13 @@ function makePromises(delayValue, amountValue, stepValue) {
 function createPromise(position, delay) {
   const shouldResolve = Math.random() > 0.3;
   
-  setTimeout(() => {
-    if (shouldResolve) {
-      resolve({ position, delay })
-    } else {
-      reject({ position, delay })
-    }
-  }, delay);
+  return new Promise((resolve, reject) => { 
+    setTimeout(() => {
+      if (shouldResolve) {
+        resolve({ position, delay })
+      } else {
+        reject({ position, delay })
+      }
+    }, delay);
+  });
 }
