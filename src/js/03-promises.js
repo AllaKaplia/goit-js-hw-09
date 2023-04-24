@@ -28,8 +28,13 @@ function onFormInputValue(evt) {
 
 function onPromisesStart(evt) {
   evt.preventDefault()
-  makePromises(delayTime, amountQuantity, stepTime)
+  if(delayTime <=0 || amountQuantity <= 0 || stepTime <= 0){
+    Notiflix.Notify.failure('First delay, Delay step and Amount must be greater than 0!');
+  } else {
+    makePromises(delayTime, amountQuantity, stepTime)
+  }
 };
+
 
 function makePromises(delayValue, amountValue, stepValue) {
   let delay = delayValue;
