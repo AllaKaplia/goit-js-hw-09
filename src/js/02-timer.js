@@ -22,6 +22,7 @@ flatpickr("#datetime-picker", {
     if (selectedDates[0] > new Date()){
       countdownTimer(selectedDates[0]);
       Notiflix.Notify.success('We start the countdown!');
+      inputTime.Time.setAttribute('disabled', 'disabled');
     } else {
       Notiflix.Notify.failure('Please choose a date in the future.');
     }
@@ -38,10 +39,12 @@ function countdownTimer(value) {
     hoursEl.textContent = addLeadingZero(hours);
     minutesEl.textContent = addLeadingZero(minutes);
     secondsEl.textContent = addLeadingZero(seconds);
-    if (ms <= 0) {
+    if ((ms - 1000) <= 0) {
       clearInterval(intervalId);
-      window.alert('Time out!!!');
-    }
+      Notiflix.Notify.warning('Time out!!!');
+
+   }
+    
   }, TIME_INTERVAL);
 }
 
